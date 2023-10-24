@@ -1,4 +1,89 @@
+:root {
+  --simpsons-yellow: #ffd90f;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+body {
+  background-color: skyblue;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-size: 5rem;
+  text-align: center;
+  font-family: "Simpsonfont";
+  color: var(--simpsons-yellow);
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+}
+
+.quote-box {
+  font-size: 1rem;
+  background-color: white;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-weight: 200;
+}
+
+.quote-box > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+}
+
+.quote-box > div * {
+  padding: 10px;
+}
+
+.quote-box > * {
+  padding: 5px;
+}
+
+.quote-box h2 {
+  font-family: "Simpsonfont";
+  font-size: 7em;
+  color: var(--simpsons-yellow);
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+}
+
+.quote-box p {
+  font-size: 3rem;
+}
+
+.quote-box button {
+  background-color: var(--simpsons-yellow);
+  font: inherit;
+  padding: 10px;
+  font-size: 6em;
+  margin: 10px;
+}
+
+.quote-box button:hover {
+  background-color: orange;
+}
+
 .lds-spinner {
+  margin-top: 50px;
   color: official;
   display: inline-block;
   position: relative;
@@ -18,7 +103,8 @@
   width: 6px;
   height: 18px;
   border-radius: 20%;
-  background: #1500ff;
+  box-shadow: 0 0 5px gray;
+  background: var(--simpsons-yellow);
 }
 .lds-spinner div:nth-child(1) {
   transform: rotate(0deg);
@@ -74,5 +160,31 @@
   }
   100% {
     opacity: 0;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .quote-box {
+    font-size: 1.2rem;
+    background-color: white;
+    padding: 10px;
+    flex-direction: row;
+    width: 75%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    box-shadow: 0 0 5px gray;
+  }
+
+  .quote-box > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .image-on-left {
+    order: -1;
+  }
+  h1 {
+    font-size: 7rem;
   }
 }

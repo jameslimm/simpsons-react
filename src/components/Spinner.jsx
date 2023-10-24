@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class Spinner extends Component {
   render() {
     return (
-      <div class="lds-spinner">
+      <div className="lds-spinner">
         <div></div>
         <div></div>
         <div></div>
