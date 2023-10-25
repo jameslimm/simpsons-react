@@ -21,8 +21,8 @@ class App extends Component {
       return <Spinner />;
     }
 
-    const quotesJSX = this.state.simpsons.map((item) => {
-      return <Character quoteFullData={item} />;
+    const quotesJSX = this.state.simpsons.map((item, index) => {
+      return <Character quoteFullData={item} key={index} />;
     });
 
     return (
