@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 
 class Button extends Component {
-  state = {};
   render() {
-    return <button>{this.props.button}</button>;
+    const { button, id, highlight, onClick } = this.props;
+    return (
+      <button id={id} className={highlight ? "highlighted" : "not-highlighted"} onClick={onClick}>
+        {button}
+      </button>
+    );
   }
 }
 

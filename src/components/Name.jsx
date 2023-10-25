@@ -2,7 +2,8 @@ import React, { Component } from "react";
 
 class Name extends Component {
   render() {
-    return <h2>{this.props.name}</h2>;
+    const { name } = this.props;
+    return <h2>{name}</h2>;
   }
 }
 

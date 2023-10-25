@@ -3,7 +3,8 @@ import React, { Component } from "react";
 class Quote extends Component {
   state = {};
   render() {
-    return <p>{this.props.quote}</p>;
+    const { quote } = this.props;
+    return <p>{quote}</p>;
   }
 }
 
