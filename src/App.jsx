@@ -1,88 +1,93 @@
-import React, { Component } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Spinner from "./components/Spinner";
 import Character from "./components/Character";
 import Filter from "./components/Filter";
 import "./App.css";
 
-class App extends Component {
-  state = { filter: "" };
+const App = () => {
+  const [simpsons, setSimpsons] = useState(null);
+  const [filter, setFilter] = useState("");
 
-  async componentDidMount() {
+  const loadSimpsonsData = async () => {
     try {
+      console.log("API CALL");
       const { data } = await axios.get(`https://thesimpsonsquoteapi.glitch.me/quotes?count=15`);
 
-      // add id and liked to the state data
-      const fixedData = data.map((item) => {
-        return { ...item, id: Math.round(Math.random() * 1000000), liked: false };
+      data.forEach((item) => {
+        item.id = Math.round(Math.random() * 1000000);
+        item.liked = false;
       });
 
-      this.setState({ simpsons: fixedData });
+      setSimpsons(data);
     } catch (e) {
       console.log("Looks like the API is down!");
     }
+  };
+
+  useEffect(() => {
+    loadSimpsonsData();
+  }, []);
+
+  const onFilterChange = (e) => {
+    setFilter(e.target.value);
+  };
+
+  const onDeleteClicked = (e) => {
+    setSimpsons(simpsons.filter((item) => item.id !== Number(e.target.id)));
+  };
+
+  const onLikeClicked = (e) => {
+    const newData = simpsons.map((item) => {
+      if (item.id === Number(e.target.id)) {
+        return { ...item, liked: !item.liked };
+      } else {
+        return { ...item };
+      }
+    });
+    setSimpsons(newData);
+  };
+
+  if (!simpsons) {
+    console.log("NO SIMPSONS DATA HERE");
+    return <Spinner />;
   }
 
-  onFilterChange = (e) => {
-    this.setState({ filter: e.target.value });
-  };
+  let filteredResults = [];
 
-  onDeleteClicked = (e) => {
-    this.setState({ simpsons: this.state.simpsons.filter((item) => item.id !== Number(e.target.id)) });
-  };
+  switch (filter) {
+    case "":
+      filteredResults = [...simpsons];
+      break;
+    case "--show-liked--":
+      filteredResults = simpsons.filter((item) => item.liked);
+      break;
+    default:
+      filteredResults = simpsons.filter((item) => item.character === filter);
+      break;
+  }
 
-  onLikeClicked = (e) => {
-    const newData = this.state.simpsons.map((item) => {
-      let { liked, id, ...rest } = item;
-      if (id === Number(e.target.id)) liked = !liked;
-      return { ...rest, id, liked };
-    });
-    this.setState({ simpsons: newData });
-  };
+  let quotesJSX = filteredResults.map((item, index) => {
+    return <Character quoteFullData={item} key={index} onLikeClicked={onLikeClicked} onDeleteClicked={onDeleteClicked} />;
+  });
 
-  render() {
-    const { simpsons, filter } = this.state;
-
-    if (!simpsons) {
-      return <Spinner />;
-    }
-
-    let filteredResults = [];
-
-    switch (filter) {
-      case "":
-        filteredResults = [...simpsons];
-        break;
-      case "--show-liked--":
-        filteredResults = simpsons.filter((item) => item.liked);
-        break;
-      default:
-        filteredResults = simpsons.filter((item) => item.character === filter);
-        break;
-    }
-
-    let quotesJSX = filteredResults.map((item, index) => {
-      return <Character quoteFullData={item} key={index} onLikeClicked={this.onLikeClicked} onDeleteClicked={this.onDeleteClicked} />;
-    });
-
-    // if there are no results:
-    if (filteredResults.length === 0) {
-      quotesJSX = (
-        <div className="no-results">
-          <h3>D'oh!</h3>
-          <p>No results.</p>
-        </div>
-      );
-    }
-
-    return (
-      <>
-        <h1>Simpsons Quotes</h1>
-        <Filter simpsons={this.state.simpsons} onChange={this.onFilterChange} />
-        {quotesJSX}
-      </>
+  // if there are no results:
+  if (filteredResults.length === 0) {
+    quotesJSX = (
+      <div className="no-results">
+        <h3>D'oh!</h3>
+        <p>No results.</p>
+      </div>
     );
   }
-}
+
+  return (
+    <>
+      <h1>Simpsons Quotes</h1>
+      <Filter simpsons={simpsons} onChange={onFilterChange} />
+      {quotesJSX}
+    </>
+  );
+};
 
 export default App;

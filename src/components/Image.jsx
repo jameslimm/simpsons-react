@@ -1,13 +1,7 @@
-import React, { Component } from "react";
+const Image = ({ characterDirection, image, alt }) => {
+  // if image faces right, add the image on left class
 
-class Image extends Component {
-  render() {
-    const { characterDirection, image, alt } = this.props;
-
-    // if image faces right, add the image on left class
-
-    return <img alt={alt} className={characterDirection === "Left" ? "image-on-left" : ""} src={image} />;
-  }
-}
+  return <img alt={alt} className={characterDirection === "Left" ? "image-on-left" : ""} src={image} />;
+};
 
 export default Image;
