@@ -4,10 +4,17 @@ import Spinner from "./components/Spinner";
 import Character from "./components/Character";
 import Filter from "./components/Filter";
 import "./App.css";
+import { useDispatch, useSelector } from "react-redux";
+import { DELETE_QUOTE, LIKE_QUOTE, SAVE_QUOTES, SET_FILTER } from "./utils/types";
 
 const App = () => {
-  const [simpsons, setSimpsons] = useState(null);
-  const [filter, setFilter] = useState("");
+  //const [simpsons, setSimpsons] = useState(null);
+  //const [filter, setFilter] = useState("");
+
+  // REDUX STATE STUFF
+  const simpsons = useSelector((state) => state.simpsons);
+  const filter = useSelector((state) => state.filter);
+  const dispatch = useDispatch();
 
   const loadSimpsonsData = async () => {
     try {
@@ -19,7 +26,8 @@ const App = () => {
         item.liked = false;
       });
 
-      setSimpsons(data);
+      // setSimpsons(data);
+      dispatch({ type: SAVE_QUOTES, payload: data });
     } catch (e) {
       console.log("Looks like the API is down!");
     }
@@ -30,22 +38,16 @@ const App = () => {
   }, []);
 
   const onFilterChange = (e) => {
-    setFilter(e.target.value);
+    dispatch({ type: SET_FILTER, payload: e.target.value });
   };
 
   const onDeleteClicked = (e) => {
-    setSimpsons(simpsons.filter((item) => item.id !== Number(e.target.id)));
+    dispatch({ type: DELETE_QUOTE, payload: Number(e.target.id) });
+    // setSimpsons(simpsons.filter((item) => item.id !== Number(e.target.id)));
   };
 
   const onLikeClicked = (e) => {
-    const newData = simpsons.map((item) => {
-      if (item.id === Number(e.target.id)) {
-        return { ...item, liked: !item.liked };
-      } else {
-        return { ...item };
-      }
-    });
-    setSimpsons(newData);
+    dispatch({ type: LIKE_QUOTE, payload: Number(e.target.id) });
   };
 
   if (!simpsons) {
