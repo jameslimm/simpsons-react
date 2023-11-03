@@ -10,6 +10,5 @@ export const fixData = (data) => {
     item.shortname = makeShortName(item.character);
   });
 
-  console.log(_data);
   return _data;
 };

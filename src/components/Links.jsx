@@ -9,11 +9,11 @@ const Links = () => {
 
   return (
     <ul>
-      {characters.map((char) => {
+      {characters.map((char, i) => {
         let { shortname, name } = char;
         const path = "/" + shortname;
         return (
-          <li>
+          <li key={i}>
             <Link to={path}>{name}</Link>
           </li>
         );
