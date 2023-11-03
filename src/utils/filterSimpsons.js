@@ -5,6 +5,6 @@ export const filterSimpsons = (simpsons, filter) => {
     case "--show-liked--":
       return simpsons.filter((item) => item.liked);
     default:
-      return simpsons.filter((item) => item.character === filter);
+      return simpsons.filter((item) => item.shortname === filter);
   }
 };

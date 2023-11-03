@@ -4,6 +4,7 @@ import { selectLoaded, selectSimpsons } from "../utils/simpsonsSlice";
 import Filter from "./Filter";
 import Spinner from "./Spinner";
 import Characters from "./Characters";
+import Links from "./Links";
 
 const Interface = () => {
   // Task - show either the loading spinner or the quotes interface
@@ -21,6 +22,7 @@ const Interface = () => {
       <h1>Simpsons Quotes</h1>
       <Filter />
       <Characters />
+      <Links />
     </>
   );
 };
