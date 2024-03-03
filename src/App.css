@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap");
+
 :root {
   --simpsons-yellow: #ffd90f;
 }
@@ -39,9 +41,10 @@ body {
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 4em;
   text-align: center;
-  font-family: "Simpsonfont";
+  font-family: "Gochi Hand", cursive;
+  font-weight: 400;
   color: var(--simpsons-yellow);
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: black;
@@ -75,7 +78,8 @@ h1 {
 }
 
 .quote-box h2 {
-  font-family: "Simpsonfont";
+  font-family: "Gochi Hand", cursive;
+  font-weight: 400;
   font-size: 2.3em;
   color: var(--simpsons-yellow);
   -webkit-text-stroke-width: 1px;
